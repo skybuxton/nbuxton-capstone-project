@@ -301,6 +301,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
             stopWords.push("u.s.");
             stopWords.push("version");
             stopWords.push("previous");
+            stopWords.push("earlier");
 
             var prevWord = null;
             for(var idx in corectionData) {
