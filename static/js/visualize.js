@@ -299,6 +299,8 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
             stopWords.push("also");
             stopWords.push("said.");
             stopWords.push("u.s.");
+            stopWords.push("version");
+            stopWords.push("previous");
 
             var prevWord = null;
             for(var idx in corectionData) {
