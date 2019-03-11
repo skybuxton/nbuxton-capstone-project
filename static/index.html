@@ -1,0 +1,216 @@
+<!doctype html>
+
+<html>
+<head class="no-js" lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="normalize.css">
+<link rel="stylesheet" href="foundation.min.css">
+<link href='style.css' rel='stylesheet' type='text/css'>
+
+<script src="lib/vendor/modernizr.js"></script>
+
+<title>Retractions and Corrections</title>
+
+
+</head>
+<body>
+    <div id="container">
+
+	    <div id="barsSection" class="row full-width">
+	    <div class="small-7 medium-6 large-6 columns">
+        <div id="barchart">
+	    </div>
+		<h3>Filter Bar Chart</h3>
+		<p>Select Correction Type</p>
+		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="1" checked /> Major Corrections</label>
+		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="2" /> Minor Corrections</label>
+		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="3" /> Breaking News Updates</label>
+
+		<p>Select Year</p>
+		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2017" checked /> 2017</label>
+		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2016"  /> 2016</label>
+		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2015"  /> 2015</label>
+		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2014"  /> 2014</label>
+		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2013"  /> 2013</label>
+
+
+	       <ul id="wordBars" class="small-block-grid-2 medium-block-grid-4 large-block-grid-6"></ul>
+
+	   	    <div id="top20Lists" class="row full-width">
+	        <div class="small-8 medium-4 large-4 columns wordList">
+	            <h3>Minor Correction</h3>
+	            <ol id="minorCorrectionTop20"></ol>
+	         </div>
+	        <div class="small-8 medium-4 large-4 columns wordList">
+	            <h3>Major Correction</h3>
+	            <ol id="majorCorrectionTop20"></ol>
+	        </div>
+	        <div class="small-8 medium-4 large-4 columns wordList">
+	            <h3>Breaking News Update</h3>
+	            <ol id="updateTop20"></ol>
+	        </div>
+
+           <h3>Filter Word Chart</h3>
+           <div id="regionChecks">
+           	   <label style="display: inline;">
+	       	   <input name="minorCorrectionCheck" id="minorCorrectionCheck" type="checkbox" checked="yes">Minor Correction
+	       	   </label>
+	       	   <label style="display: inline;">
+               <input name="majorCorrectionCheck" id="majorCorrectionCheck" type="checkbox" checked="yes">Major Correction
+	           </label>
+	           <label style="display: inline;">
+               <input name="updateCheck" id="updateCheck" type="checkbox" checked="yes">Breaking News Update
+	           </label>
+           </div>
+	    </div>
+	     </div>
+         <div id="barsBlurb" class="small-5 medium-6 large-6 columns">
+	       <h2>Retractions and Corrections</h2>
+
+
+<h3>Introduction</h3>
+
+<p>
+Over the past five years, the World Economic Forum identified digital misinformation as one of the top ten global risks. The spread of false information has become an increasingly prominent topic of global public concern. Although misinformation, disinformation and propaganda have been used throughout history to influence public opinion —  the tectonic shifts in the online news ecosystem raises concerns about the vulnerability of democratic societies to the proliferation of misinformation. While a significant body of recent research has been done to classify news articles as misinformation, disinformation or fake news, there is a paucity of research on understanding the underlying associations for why an article may be deemed as “fake” or misinformation.  This capstone project aims to fill this gap by providing an objective and alternate approach to “fake news” by building a classification model to predict corrections and retractions in news articles. 
+</p>
+
+<h3>Overview</h3>
+
+<p>This project uses natural language processing (NLP) methods (Count vectors, TF-IDF, word embeddings and topic modeling) to extract textual features. I utilized classification methods (logistic regression, naive bayes, support vector machine, random forests and extreme gradient boosting) to build a predictor of retracted and corrected articles. The text pre-processing, model training and testing was performed in a Python environment. The textual information was derived from a text corpus and is represented as feature vectors, which was inputted into a classifier. </p>
+
+<h3>Dataset</h3>
+
+<p>I collected news articles and their metadata from the GDELT database (Global Database of Events Language and Tone) to train and test the classification models. </p>
+
+<p>Source:</p>
+
+<ul>
+
+<li>The data will be derived from GDELT 2.0 dataset news articles collected from 2013 – 2018. </li>
+<li>The GDELT 2.0 dataset by Google contains a set of “events” which are linked to news articles from all around the world. They are all categorized by location, language, with entity extraction (Person, Organization, Country), emotion, along with other attributes. </li>
+</ul>
+
+<p>Sample: </p>
+
+<ul>
+<li>There is approx. 2.5TB events per year in GDELT 2.0. I have written a script that downloads the URLs associated with each event and created a sample of 500,000 new articles from different news outlets.</li>
+<li>The HTML is stored in a directory and the script extracts the title and body in plain text. I downloaded approx. 8,000 articles in every month from 2013-2018.</li>
+<li>The dataset was split into a test set and a training set.</li>
+</ul>
+
+<h3>Data Categorization</h3> 
+<p>Each news article has been put into 4 categories: Major correction, minor corrections, updated articles, and no corrections. </p>
+
+<ul>
+<li>Major correction: Category for articles where the author of the story misidentified something in the article that changed the meaning of the story. </li>
+<li>Minor correction: Category for articles where the author made a simple mistake such as an incorrect spelling of a name, dates, typos, etc. The meaning of the article does not change. </li>
+<li>Updated articles: Category is for articles that are subject to an event that is changing in real time. This includes items such as: Live sports games, crimes, event notifications etc. Articles that fall under this category should not be counted as a mistake. </li>
+<li>No correction: Category for articles that do not have any corrections or updates associated with them. </li>
+</ul>
+
+<h3>Methods</h3>
+
+<h4>Dataset Preparation</h4>
+<p>Each article is treated as a document, and the text is cleaned through the following pipeline: </p>
+<ul>
+<li>Stripping HTML: All HTML tags are removed from the text documents. </li>
+<li>Lower-casing: All sentences are converted into lowercase. </li>
+<li>Removal of non-words: Punctuation and non-words are removed. All tabs, newlines, and spaces are trimmed to a single space character.</li>
+<li>Normalizing Numbers: All numbers in the sentences are replaced with the text “number”.</li>
+</ul>
+
+<h4>Feature Engineering</h4>
+<p>In order to extract relevant textual features, I transformed the data into feature vectors. I used count vectors, TF-IDF, word embeddings and topic modeling to extract features from the dataset. Below is an overview of each feature engineering method</p>
+
+<h5>Count Vectors as features: </h5>
+<p>To implement this matrix notation of the dataset in Python, I created a count vectorizer object, which transformed the training and test data. </p>
+
+<h5>TF-IDF Vectors as features:</h5>
+<p>The TF-IDF score represents the relative importance of a term in the document and corpus. The TF-IDF vectors were generated at the word level, n-gram level and the character level</p>
+<ul>
+<li>The word level TF-IDF: matrix that represents the scores of all terms in different documents. </li>
+<li>The n-gram level TF-IDF: matrix that represents the TF-IDF scores of the n–grams. </li>
+<li>The character level TF-IDF: matrix that represents the character level n-grams in the corpus. </li>
+</ul>
+
+<h5>Word Embeddings as features</h5>
+<p>This method represents words and documents using a dense vector representation. I used a pre-trained embedder trained by fasttext on all text from Wikipedia 2017. First I downloaded the pre-trained word embedding vector, then I created a tokenizer object and transformed the text documents to sequence of tokens and padded them. </p>
+
+<h5>Topic Models as features</h5>
+<p>I used topic modelling to identify the groups of words from the corpus. I used Latent Dirichlet Allocation to generate the features. I started with a fixed number of topics. The probability distributions over the words from the topics provided insight into the different themes in the documents. </p>
+
+<h5>Model Building</h5>
+<p>Once the feature engineering was completed, I trained a classifier using the features created during the feature engineering phase. I implemented the following different classifiers: 1) Logistic Regression 2) Naive Bayes Classifier 3) Support Vector Machine 4) Random Forests 5) Xtreme Gradient Boosting.</p>
+
+
+<h3>Peliminary Findings</h3>
+<p>I found that Xtreme Gradient Boosting has the highest accuracy at 82%. Additionally, I found that more articles get updated for events that happen earlier in the day. Articles with the phrase “spokesman said” do not get corrected. Further analysis will be completed to identify trends in the data and improve accuracy. </p>
+
+<p>INSERT graph [screen shot] with the table with f1 score, precision and recall. So that we can shpw that we accounted for balanced classes </p>
+
+
+<h4>Next Steps</h4> 
+<ul>
+<li>Examine the examples in my cross-validation set that the algorithm made mistakes on. I will further examine the data to see if I can find trends on the type of problems or examples that the classifier is making errors on.</li>
+<li>Apply an anomaly detection algorithm on the dataset.</li>
+<li>Further analyze each feature to determine if it should be used in the models.</li>
+<li>Implement a deeper learning model such as doc2vec.</li>
+<li>Perform more data cleaning methods and remove more stop words. I originally incorporated stemming, lemming and stop words in the data cleaning pipeline, however it lowered the accuracy of the models. </li>
+<li>Collect more data. Since fake news changes rapidly, it is important to create a robust dataset that can be used to improve machine learning methods. </li>
+</ul>
+
+<p><b>CRUFT BELOW</b></p>
+
+	       <p>This project aims to make a model that co</p>
+
+	       <p>This page is a D3 site that gives an overview of all the correction data. You can select to see which bi-grams are most common in each correction category</p>
+
+	       <p>The Python code and notebook is available here:</p>
+
+           <div id="frequentAppears">
+              <p id="minorCorrectionFreq"></p>
+              <p id="majorCorrectionFreq"></p>
+              <p id="updateFreq"></p>
+           </div>
+
+	       </div>
+
+
+	    </div>
+
+
+
+
+
+	    <div id="tooltip" style="display: none;">
+	    <p id="region"></p>
+	    <p id="numSongs"></p>
+        <p id="numArtists"></p>
+        <p id="artistSample"></p>
+	    </div>
+
+<div id="divider"></div>
+<div class="credit">
+
+Navarra Buxton - navarrabuxton [at] gmail [dot] com
+<div>
+</div>
+</div>
+
+
+</div>
+	 
+<script type="text/javascript" src="js/require_config.DEBUG.js"></script>
+<script type="text/javascript" src="lib/require.js" data-main="visualize.js"></script>
+<!--TODO: use require for this and move to require_config -->
+<script src="lib/jquery/jquery-1.9.1.js"></script>
+ <script src="lib/foundation.min.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>
