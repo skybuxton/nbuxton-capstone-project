@@ -3,87 +3,211 @@
 <html>
 <head class="no-js" lang="en">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
 <link rel="stylesheet" href="normalize.css">
-<link rel="stylesheet" href="foundation.min.css">
+<!-- <link rel="stylesheet" href="foundation.min.css"> -->
 <link href='style.css' rel='stylesheet' type='text/css'>
-
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.0/js/foundation.min.js"></script> -->
 <script src="lib/vendor/modernizr.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+
+
+<script src="js/model.js" type="text/javascript"></script>
+
 
 <title>Retractions and Corrections</title>
 
 
 </head>
 <body>
-    <div id="container">
-
-	    <div id="barsSection" class="row full-width">
-	    <div class="small-7 medium-6 large-6 columns">
-        <div id="barchart">
-	    </div>
-		<h3>Filter Bar Chart</h3>
-		<p>Select Correction Type</p>
-		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="1" checked /> Major Corrections</label>
-		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="2" /> Minor Corrections</label>
-		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="3" /> Breaking News Updates</label>
-
-		<p>Select Year</p>
-		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2017" checked /> 2017</label>
-		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2016"  /> 2016</label>
-		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2015"  /> 2015</label>
-		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2014"  /> 2014</label>
-		<label style="display: inline;"><input type="radio" name="barchart_year"  class="barchart_radio" value="2013"  /> 2013</label>
-
-
-	       <ul id="wordBars" class="small-block-grid-2 medium-block-grid-4 large-block-grid-6"></ul>
-
-	   	    <div id="top20Lists" class="row full-width">
-	        <div class="small-8 medium-4 large-4 columns wordList">
-	            <h3>Minor Correction</h3>
-	            <ol id="minorCorrectionTop20"></ol>
-	         </div>
-	        <div class="small-8 medium-4 large-4 columns wordList">
-	            <h3>Major Correction</h3>
-	            <ol id="majorCorrectionTop20"></ol>
-	        </div>
-	        <div class="small-8 medium-4 large-4 columns wordList">
-	            <h3>Breaking News Update</h3>
-	            <ol id="updateTop20"></ol>
-	        </div>
-
-           <h3>Filter Word Chart</h3>
-           <div id="regionChecks">
-           	   <label style="display: inline;">
-	       	   <input name="minorCorrectionCheck" id="minorCorrectionCheck" type="checkbox" checked="yes">Minor Correction
-	       	   </label>
-	       	   <label style="display: inline;">
-               <input name="majorCorrectionCheck" id="majorCorrectionCheck" type="checkbox" checked="yes">Major Correction
-	           </label>
-	           <label style="display: inline;">
-               <input name="updateCheck" id="updateCheck" type="checkbox" checked="yes">Breaking News Update
-	           </label>
-           </div>
-	    </div>
-	     </div>
-         <div id="barsBlurb" class="small-5 medium-6 large-6 columns">
+<div id="container">
+    <div id="barsSection" class="row">
+	    <div class="col-md-6 ">
+<!-- 			<h3>Filter Bar Chart</h3>
+			<p>Select Correction Type</p>
+ --><!-- - 		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="1" checked />
+ 	Major Corrections
+			
+			</label>
+			<label style="display: inline;">
+						<input type="radio" name="barchart_radio" class="barchart_radio" value="2"  /> Minor Corrections</label>
+			<label style="display: inline;">			<input type="radio" name="barchart_radio" class="barchart_radio" value="3" checked />
+ Breaking News Updates</label> -->
 	       <h2>Retractions and Corrections</h2>
 
 
-<h3>Introduction</h3>
+<!-- <h3>Introduction</h3> -->
 
 <p>
 Over the past five years, the World Economic Forum identified digital misinformation as one of the top ten global risks. The spread of false information has become an increasingly prominent topic of global public concern. Although misinformation, disinformation and propaganda have been used throughout history to influence public opinion —  the tectonic shifts in the online news ecosystem raises concerns about the vulnerability of democratic societies to the proliferation of misinformation. While a significant body of recent research has been done to classify news articles as misinformation, disinformation or fake news, there is a paucity of research on understanding the underlying associations for why an article may be deemed as “fake” or misinformation.  This capstone project aims to fill this gap by providing an objective and alternate approach to “fake news” by building a classification model to predict corrections and retractions in news articles. 
 </p>
+<!-- 
+	
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" name="barchart_radio" class="barchart_radio" value="1" checked /> Major Corrections
+  </label>
+  <label class="btn btn-secondary ">
+    <input type="radio" name="barchart_radio" class="barchart_radio" value="2" /> Minor Corrections
+  </label>
+  <label class="btn btn-secondary ">
+    <input type="radio" name="barchart_radio" class="barchart_radio" value="3" /> Breaking News Updates
+  </label>
+</div>
 
-<h3>Overview</h3>
+	
+<div class="btn-group btn-group-toggle" data-toggle="buttons" id="year_buttons">
+  <label class="btn btn-primary active">
+    <input type="radio" name="barchart_year"  class="barchart_radio" value="2016" checked /> 2016
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="barchart_year"  class="barchart_radio" value="2015" /> 2015
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="barchart_year"  class="barchart_radio" value="2014" /> 2014
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="barchart_year"  class="barchart_radio" value="2013" /> 2013
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="barchart_year"  class="barchart_radio" value="2012" /> 2012
+  </label>
 
-<p>This project uses natural language processing (NLP) methods (Count vectors, TF-IDF, word embeddings and topic modeling) to extract textual features. I utilized classification methods (logistic regression, naive bayes, support vector machine, random forests and extreme gradient boosting) to build a predictor of retracted and corrected articles. The text pre-processing, model training and testing was performed in a Python environment. The textual information was derived from a text corpus and is represented as feature vectors, which was inputted into a classifier. </p>
+</div> -->
+		</div>
+	    <div class="col-md-6">
 
-<h3>Dataset</h3>
+	    	<!-- <h2>Most common bi-grams</h2> -->
+	   	    <div id="top20Lists" class="row" style="margin-left: 0px;">
+		        <div class="col-md-4 columns wordList" style="padding-left: 0px;">
+		            <h4>Minor Correction</h4>
+		            <ol id="minorCorrectionTop20"></ol>
+		         </div>
+		        <div class="col-md-4 columns wordList" style="padding-left: 0px;">
+		            <h4>Major Correction</h4>
+		            <ol id="majorCorrectionTop20"></ol>
+		        </div>
+		        <div class="col-md-4 columns wordList" style="padding-left: 0px;">
+		            <h4>Breaking News Update</h4>
+		            <ol id="updateTop20"></ol>
+		        </div>
+		    </div>
 
+	    </div>
+	  </div>
+    <div id="barsSection2" class="row">
+	    <div class="col-md-6">
+	    		    	<!-- <h2>Number of Retractions (yearly)</h2> -->
+	        <div id="barchart"></div>
+	    </div>
+
+	    <div class="col-md-6">
+
+
+	       <ul id="wordBars" class="wordBarContainer"></ul>
+
+
+	    </div>
+	     </div>
+	 </div>
+	 <div class="row">
+	 	<div class="col-md-4"> </div>
+	 	<div class="col-md-4" style="text-align: center;">
+	 		<hr/>
+	 		<div style="margin: 20px">
+		        <button type="button" value="Decline" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#inputModal">Run Model</button>
+
+	 		</div>
+
+
+	 			    	<hr/>
+
+           <div id="regionChecks">
+           	  <div class="form-check">
+		       	   <label style="display: inline;" class="form-check-label">
+			       	   <input name="minorCorrectionCheck" id="minorCorrectionCheck" type="checkbox" checked="yes"> Minor Correction
+		       	   </label>
+		       	   <label style="display: inline;" class="form-check-label">
+			           <input name="majorCorrectionCheck" id="majorCorrectionCheck" type="checkbox" checked="yes"> Major Correction
+		           </label>
+		       	   <label style="display: inline;" class="form-check-label">
+			           <input name="updateCheck" id="updateCheck" type="checkbox" checked="yes"> Breaking News Update
+		           </label>
+		       </div>
+           </div>
+
+
+   		    <div>
+           	  <div class="form-check">
+				<label style="display: inline;">
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2017"  checked /> 2017
+				</label>
+				<label style="display: inline;">
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2016"  /> 2016
+				</label>
+				<label style="display: inline;">
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2015"  /> 2015
+				</label>
+				<label style="display: inline;">
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2014"  /> 2014
+				</label>
+				<label style="display: inline;">
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2013"  /> 2013
+				</label> 
+			  </div>
+		    </div>
+
+	    	<hr/>
+
+		</div>
+
+	 	<div class="col-md-4"> </div>
+
+	 </div>
+     <div id="barsSection3" class="row">
+		<div class="col-md-2"> </div>
+		<div class="col-md-8">
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#t1" aria-controls="t1" role="tab" data-toggle="tab">Overview</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t2" aria-controls="t2" role="tab" data-toggle="tab">Data Collection</a>
+ </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t3" aria-controls="t3" role="tab" data-toggle="tab">Categorization</a>
+ </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t4" aria-controls="t4" role="tab" data-toggle="tab">Dataset Preparation</a>
+ </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t5" aria-controls="t5" role="tab" data-toggle="tab">Feature Engineering</a>
+ </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t6" aria-controls="t6" role="tab" data-toggle="tab">Peliminary Findings</a>
+ </li>
+</ul>
+
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="t1">
+	 	<p>This project uses natural language processing (NLP) methods (Count vectors, TF-IDF, word embeddings and topic modeling) to extract textual features. I utilized classification methods (logistic regression, naive bayes, support vector machine, random forests and extreme gradient boosting) to build a predictor of retracted and corrected articles. The text pre-processing, model training and testing was performed in a Python environment. The textual information was derived from a text corpus and is represented as feature vectors, which was inputted into a classifier.</p>
+ 	</div>
+    <div role="tabpanel" class="tab-pane" id="t2">
+    	
 <p>I collected news articles and their metadata from the GDELT database (Global Database of Events Language and Tone) to train and test the classification models. </p>
 
 <p>Source:</p>
@@ -102,19 +226,19 @@ Over the past five years, the World Economic Forum identified digital misinforma
 <li>The dataset was split into a test set and a training set.</li>
 </ul>
 
-<h3>Data Categorization</h3> 
-<p>Each news article has been put into 4 categories: Major correction, minor corrections, updated articles, and no corrections. </p>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="t3">
+    	<p>Each news article has been put into 4 categories: Major correction, minor corrections, updated articles, and no corrections. </p>
 
-<ul>
-<li>Major correction: Category for articles where the author of the story misidentified something in the article that changed the meaning of the story. </li>
-<li>Minor correction: Category for articles where the author made a simple mistake such as an incorrect spelling of a name, dates, typos, etc. The meaning of the article does not change. </li>
-<li>Updated articles: Category is for articles that are subject to an event that is changing in real time. This includes items such as: Live sports games, crimes, event notifications etc. Articles that fall under this category should not be counted as a mistake. </li>
-<li>No correction: Category for articles that do not have any corrections or updates associated with them. </li>
-</ul>
+		<ul>
+		<li>Major correction: Category for articles where the author of the story misidentified something in the article that changed the meaning of the story. </li>
+		<li>Minor correction: Category for articles where the author made a simple mistake such as an incorrect spelling of a name, dates, typos, etc. The meaning of the article does not change. </li>
+		<li>Updated articles: Category is for articles that are subject to an event that is changing in real time. This includes items such as: Live sports games, crimes, event notifications etc. Articles that fall under this category should not be counted as a mistake. </li>
+		<li>No correction: Category for articles that do not have any corrections or updates associated with them. </li>
+		</ul>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="t4">
 
-<h3>Methods</h3>
-
-<h4>Dataset Preparation</h4>
 <p>Each article is treated as a document, and the text is cleaned through the following pipeline: </p>
 <ul>
 <li>Stripping HTML: All HTML tags are removed from the text documents. </li>
@@ -123,7 +247,17 @@ Over the past five years, the World Economic Forum identified digital misinforma
 <li>Normalizing Numbers: All numbers in the sentences are replaced with the text “number”.</li>
 </ul>
 
-<h4>Feature Engineering</h4>
+<h5>Word Embeddings as features</h5>
+<p>This method represents words and documents using a dense vector representation. I used a pre-trained embedder trained by fasttext on all text from Wikipedia 2017. First I downloaded the pre-trained word embedding vector, then I created a tokenizer object and transformed the text documents to sequence of tokens and padded them. </p>
+
+<h5>Topic Models as features</h5>
+<p>I used topic modelling to identify the groups of words from the corpus. I used Latent Dirichlet Allocation to generate the features. I started with a fixed number of topics. The probability distributions over the words from the topics provided insight into the different themes in the documents. </p>
+
+<h5>Model Building</h5>
+<p>Once the feature engineering was completed, I trained a classifier using the features created during the feature engineering phase. I implemented the following different classifiers: 1) Logistic Regression 2) Naive Bayes Classifier 3) Support Vector Machine 4) Random Forests 5) Xtreme Gradient Boosting.</p>
+
+  </div>
+  <div role="tabpanel" class="tab-pane" id="t5">
 <p>In order to extract relevant textual features, I transformed the data into feature vectors. I used count vectors, TF-IDF, word embeddings and topic modeling to extract features from the dataset. Below is an overview of each feature engineering method</p>
 
 <h5>Count Vectors as features: </h5>
@@ -136,67 +270,74 @@ Over the past five years, the World Economic Forum identified digital misinforma
 <li>The n-gram level TF-IDF: matrix that represents the TF-IDF scores of the n–grams. </li>
 <li>The character level TF-IDF: matrix that represents the character level n-grams in the corpus. </li>
 </ul>
-
-<h5>Word Embeddings as features</h5>
-<p>This method represents words and documents using a dense vector representation. I used a pre-trained embedder trained by fasttext on all text from Wikipedia 2017. First I downloaded the pre-trained word embedding vector, then I created a tokenizer object and transformed the text documents to sequence of tokens and padded them. </p>
-
-<h5>Topic Models as features</h5>
-<p>I used topic modelling to identify the groups of words from the corpus. I used Latent Dirichlet Allocation to generate the features. I started with a fixed number of topics. The probability distributions over the words from the topics provided insight into the different themes in the documents. </p>
-
-<h5>Model Building</h5>
-<p>Once the feature engineering was completed, I trained a classifier using the features created during the feature engineering phase. I implemented the following different classifiers: 1) Logistic Regression 2) Naive Bayes Classifier 3) Support Vector Machine 4) Random Forests 5) Xtreme Gradient Boosting.</p>
-
-
-<h3>Peliminary Findings</h3>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="t6">
 <p>I found that Xtreme Gradient Boosting has the highest accuracy at 82%. Additionally, I found that more articles get updated for events that happen earlier in the day. Articles with the phrase “spokesman said” do not get corrected. Further analysis will be completed to identify trends in the data and improve accuracy. </p>
 
 <p>INSERT graph [screen shot] with the table with f1 score, precision and recall. So that we can shpw that we accounted for balanced classes </p>
+  </div>
+  </div>
+</div>
+<div class="col-md-2"> </div>
 
 
-<h4>Next Steps</h4> 
-<ul>
-<li>Examine the examples in my cross-validation set that the algorithm made mistakes on. I will further examine the data to see if I can find trends on the type of problems or examples that the classifier is making errors on.</li>
-<li>Apply an anomaly detection algorithm on the dataset.</li>
-<li>Further analyze each feature to determine if it should be used in the models.</li>
-<li>Implement a deeper learning model such as doc2vec.</li>
-<li>Perform more data cleaning methods and remove more stop words. I originally incorporated stemming, lemming and stop words in the data cleaning pipeline, however it lowered the accuracy of the models. </li>
-<li>Collect more data. Since fake news changes rapidly, it is important to create a robust dataset that can be used to improve machine learning methods. </li>
-</ul>
-
-	       </div>
-
-
-	    </div>
-
-
-
-
-
-	    <div id="tooltip" style="display: none;">
-	    <p id="region"></p>
-	    <p id="numSongs"></p>
-        <p id="numArtists"></p>
-        <p id="artistSample"></p>
-	    </div>
-
+</div>
 <div id="divider"></div>
 <div class="credit">
 
 Navarra Buxton - navarrabuxton [at] gmail [dot] com
 <div>
+
+<!-- Modal -->
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Paste in text of a newspaper article</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control col-xs-12" id="inputTextarea" style="height: 400px;"></textarea>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="runModelFromModal();">Run Model!</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<!-- result modal -->
+<div class="modal fade " id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Results</h4>
+                </div>
+                <div class="modal-body">
+                	<h3 id="resultName"></h3>
+                	<p id="resultAccuracy"></p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
 </div>
 </div>
 
+<div id="big-spinner" class="loading">Loading&#8230;</div>
 
 </div>
 	 
 <script type="text/javascript" src="js/require_config.DEBUG.js"></script>
 <script type="text/javascript" src="lib/require.js" data-main="visualize.js"></script>
 <!--TODO: use require for this and move to require_config -->
-<script src="lib/jquery/jquery-1.9.1.js"></script>
- <script src="lib/foundation.min.js"></script>
-  <script>
+<!-- <script src="lib/jquery/jquery-1.9.1.js"></script> -->
+ <!-- <script src="lib/foundation.min.js"></script> -->
+<!--   <script>
     $(document).foundation();
   </script>
-</body>
+ --></body>
 </html>

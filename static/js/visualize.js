@@ -1,10 +1,12 @@
-require(['knockout','jquery','d3','topojson','queue','underscore'],
-    function (ko,$,d3,topojson,queue,_)
+require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
+    function (ko,$,d3,topojson,queue,_,bootstrap)
 {
     "use strict";
 
     $(function ()
     {
+
+
         var barData = null; // hack
         // Setup word stuff
 	    var regions = ["East Coast","West Coast","Midwest","Southern"];
@@ -99,110 +101,22 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
         //     .attr('class', 'count');
         // // end bar
 
-
-        function populateBarCharts(barchartData) {
-            var margin = {top: 20, right: 20, bottom: 70, left: 40},
-                width = 800 - margin.left - margin.right,
-                height = 300 - margin.top - margin.bottom;
-
-            // Parse the date / time
-            var parseDate = d3.time.format("%Y-%m").parse;
-
-            var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
-
-            var y = d3.scale.linear().range([height, 0]);
-
-            var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                // .tickFormat(d3.time.format("%Y-%m"));
-
-            var yAxis = d3.svg.axis()
-                .scale(y)
-                .orient("left")
-                .ticks(10);
-
-            var svgContainer = d3.select("#barchart")
-            svgContainer.html("");
-            var svg = svgContainer.append("svg")
-                .attr("width", '100%')//width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-                .attr("transform", 
-                      "translate(" + margin.left + "," + margin.top + ")");
-
-            var data = barchartData;
-
-                // data.forEach(function(d) {
-                //     d.date = parseDate(d[0]);
-                //     d.value = +d[1];
-                // });
-                
-              x.domain(data.map(function(d) { return d[0]; }));
-              y.domain([0, d3.max(data, function(d) { return d[1]; })]);
-
-              svg.append("g")
-                  .attr("class", "x axis")
-                  .attr("transform", "translate(0," + height + ")")
-                  .call(xAxis)
-                .selectAll("text")
-                  .style("text-anchor", "middle")
-
-                  .attr("dx", "-.8em")
-                  .attr("dy", "-.55em")
-                  .attr("transform", "rotate(-90)" );
-
-              svg.append("g")
-                  .attr("class", "y axis")
-                  .call(yAxis)
-                .append("text")
-                  .attr("transform", "rotate(-90)")
-                  .attr("y", 6)
-                  .attr("dy", ".71em")
-                  .style("text-anchor", "middle")
-                  .text("Articles");
-
-              svg.selectAll("bar")
-                  .data(data)
-                .enter().append("rect")
-                  .style("fill", "steelblue")
-                  .attr("x", function(d) { return x(d[0]); })
-                  .attr("width", x.rangeBand())
-                  .attr("y", function(d) { return y(d[1]); })
-                  .attr("height", function(d) { return height - y(d[1]); });
-
-        }
-
-
-        function top10words(dict) {
-            var items = Object.keys(dict).map(function(key) {
-              return [key, dict[key]];
-            });
-
-            // Sort the array based on the second element
-            items.sort(function(first, second) {
-              return second[1] - first[1];
-            });
-
-            // Create a new array with only the first 5 items
-            console.log("TOP 10");
-            console.log(items.slice(0, 10));
-            var top10 = items.slice(0, 10);
-            var ret = [];
-            for (var idx in top10) {
-                var actualWord = top10[idx][0];
-                var wordObj = {
-                    "commonWord": actualWord,
-                    "rank": idx,
-                    "frequentAppears": []
-                };
-                ret.push(wordObj);
+        function monthNumToName(mn) {
+            var d = {
+                '01': 'Jan',
+                '02': 'Feb',
+                '03': 'Mar',
+                '04': 'Apr',
+                '05': 'May',
+                '06': 'Jun',
+                '07': 'Jul',
+                '08': 'Aug',
+                '09': 'Sep',
+                '10': 'Oct',
+                '11': 'Nov',
+                '12': 'Dec'
             }
-            return ret;
-        }
-
-        function calcBarData(correctionData, correctionType) {
-
+            return d[mn];
         }
 
         function monthNameToNum(mn) {
@@ -229,6 +143,227 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
             //     console.log(mn);
             // }
             return d[mn];
+        }
+
+
+        function populateBarCharts(barchartData) {
+            // Setup svg using Bostock's margin convention
+
+var margin = {top: 20, right: 160, bottom: 35, left: 30};
+// var width = 760 - margin.left - margin.right, // 960
+
+var width = 760 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var svgContainer = d3.select("#barchart")
+    svgContainer.html("");    // if(svg.select('svg')) {
+    //     svg.select('svg').remove();
+    // }
+   var svg = svgContainer.append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// // responsive
+//     var bounds = svg.node().getBoundingClientRect(),
+//       width = bounds.width - margin.left - margin.right,
+//       height = bounds.height - margin.top - margin.bottom;
+
+//     x.rangeRound([0, width]);
+//     y.rangeRound([height, 0]);
+
+//     svg 
+
+//     g.select(".axis--x")
+//       .attr("transform", "translate(0," + height + ")")
+//       .call(d3.axisBottom(x));
+
+//     g.select(".axis--y")
+//       .call(d3.axisLeft(y).ticks(10, "%"));
+
+
+
+/* Data in strings like it would be if imported from a csv */
+
+// var data = [
+//   { year: "2006", redDelicious: "10", mcintosh: "15", oranges: "9", pears: "6" },
+//   { year: "2007", redDelicious: "12", mcintosh: "18", oranges: "9", pears: "4" },
+//   { year: "2008", redDelicious: "05", mcintosh: "20", oranges: "8", pears: "2" },
+//   { year: "2009", redDelicious: "01", mcintosh: "15", oranges: "5", pears: "4" },
+//   { year: "2010", redDelicious: "02", mcintosh: "10", oranges: "4", pears: "2" },
+//   { year: "2011", redDelicious: "03", mcintosh: "12", oranges: "6", pears: "3" },
+//   { year: "2012", redDelicious: "04", mcintosh: "15", oranges: "8", pears: "1" },
+//   { year: "2013", redDelicious: "06", mcintosh: "11", oranges: "9", pears: "4" },
+//   { year: "2014", redDelicious: "10", mcintosh: "13", oranges: "9", pears: "5" },
+//   { year: "2015", redDelicious: "16", mcintosh: "19", oranges: "6", pears: "9" },
+//   { year: "2016", redDelicious: "19", mcintosh: "17", oranges: "5", pears: "7" },
+// ];
+var data = barchartData;
+
+var parse = d3.time.format("%Y").parse;
+
+var minorCorrectionsOn = $('#minorCorrectionCheck').is(':checked');
+var majorCorrectionsOn = $('#majorCorrectionCheck').is(':checked');
+var updateCheckOn = $('#updateCheck').is(':checked');
+
+var clist = [];
+var colors = [];
+var labels = [];
+if(minorCorrectionsOn) {
+  clist.push("minorCorrections");
+  colors.push("#d25c4d");
+  labels.push("Minor Corrections")
+}
+if(majorCorrectionsOn) {
+  clist.push("majorCorrections");
+  colors.push("#b33040")
+  labels.push("Major Corrections")
+}
+if(updateCheckOn) {
+  clist.push("updates")
+  colors.push("f2b447")
+  labels.push("Breaking News")
+}
+
+// Transpose the data into layers
+var dataset = d3.layout.stack()(clist.map(function(ctype) {
+  return data.map(function(d) {
+    return {x: d.month, y: +d[ctype]};
+  });
+}));
+
+
+// Set x, y and colors
+var x = d3.scale.ordinal()
+  .domain(dataset[0].map(function(d) { return d.x; }))
+  .rangeRoundBands([10, width-10], 0.02);
+
+var y = d3.scale.linear()
+  .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
+  .range([height, 0]);
+
+
+// Define and draw axes
+var yAxis = d3.svg.axis()
+  .scale(y)
+  .orient("left")
+  .ticks(5)
+  .tickSize(-width, 0, 0)
+  .tickFormat( function(d) { return d } );
+
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient("bottom")
+  // .tickFormat(d3.time.format("%Y"));
+
+svg.append("g")
+  .attr("class", "y axis")
+  .call(yAxis);
+
+svg.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height + ")")
+  .call(xAxis);
+
+
+// Create groups for each series, rects for each segment 
+var groups = svg.selectAll("g.cost")
+  .data(dataset)
+  .enter().append("g")
+  .attr("class", "cost")
+  .style("fill", function(d, i) { return colors[i]; });
+
+var rect = groups.selectAll("rect")
+  .data(function(d) { return d; })
+  .enter()
+  .append("rect")
+  .attr("x", function(d) { return x(d.x); })
+  .attr("y", function(d) { return y(d.y0 + d.y); })
+  .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+  .attr("width", x.rangeBand())
+  .on("mouseover", function() { tooltip.style("display", null); })
+  .on("mouseout", function() { tooltip.style("display", "none"); })
+  .on("mousemove", function(d) {
+    var xPosition = d3.mouse(this)[0] - 15;
+    var yPosition = d3.mouse(this)[1] - 25;
+    tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+    tooltip.select("text").text(d.y);
+  });
+
+
+// Draw legend
+var legend = svg.selectAll(".legend")
+  .data(colors)
+  .enter().append("g")
+  .attr("class", "legend")
+  .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+ 
+legend.append("rect")
+  .attr("x", width - 18)
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", function(d, i) {return colors.slice()[i];});
+ 
+legend.append("text")
+  .attr("x", width + 5)
+  .attr("y", 9)
+  .attr("dy", ".35em")
+  .style("text-anchor", "start")
+  .text(function(d, i) { 
+    return labels[i];
+    // switch (i) {
+    //   case 0: return "Major Corrections";
+    //   case 1: return "Minor Corrections";
+    //   case 2: return "Breaking News Updates";
+    // }
+  });
+
+
+// Prep the tooltip bits, initial display is hidden
+var tooltip = svg.append("g")
+  .attr("class", "tooltip")
+  .style("display", "none");
+    
+tooltip.append("rect")
+  .attr("width", 30)
+  .attr("height", 20)
+  .attr("fill", "white")
+  .style("opacity", 0.5);
+
+tooltip.append("text")
+  .attr("x", 15)
+  .attr("dy", "1.2em")
+  .style("text-anchor", "middle")
+  .attr("font-size", "12px")
+  .attr("font-weight", "bold");
+
+        }
+
+
+        function top10words(dict) {
+            var items = Object.keys(dict).map(function(key) {
+              return [key, dict[key]];
+            });
+
+            // Sort the array based on the second element
+            items.sort(function(first, second) {
+              return second[1] - first[1];
+            });
+
+            // Create a new array with only the first 5 items
+            var top10 = items.slice(0, 10);
+            var ret = [];
+            for (var idx in top10) {
+                var actualWord = top10[idx][0];
+                var wordObj = {
+                    "commonWord": actualWord,
+                    "rank": idx,
+                    "frequentAppears": []
+                };
+                ret.push(wordObj);
+            }
+            return ret;
         }
 
         function barDictToList(dict) {
@@ -260,9 +395,9 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
                     var ymkey = year + "-" + monthNameToNum(month);
 
                     var dict = updateData;
-                    if(correctionType == 1) {
+                    if(correctionType == 2) {
                         dict = minorCorrectionData;
-                    } else if (correctionType == 2) {
+                    } else if (correctionType == 1) {
                         dict = majorCorrectionData;
                     } else {
                         dict = updateData;
@@ -299,9 +434,6 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
             stopWords.push("also");
             stopWords.push("said.");
             stopWords.push("u.s.");
-            stopWords.push("version");
-            stopWords.push("previous");
-            stopWords.push("earlier");
 
             var prevWord = null;
             for(var idx in corectionData) {
@@ -347,34 +479,42 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
             var result = {
                 "Minor Corrections": {
                     "commonWords": top10words(minorCorrectionWords),
-                    "numArticles": 0
+                    // "numArticles": 0
                 },
                 "Major Corrections": {
                     "commonWords": top10words(majorCorrectionWords),
-                    "numArticles": 0
+                    // "numArticles": 0
                 },
                 "Breaking News Updates": {
                     "commonWords": top10words(updateWords),
-                    "numArticles": 0
+                    // "numArticles": 0
                 },
             }
             return result
         }
 
         function filterYear(bardata, year) {
-            var newBarData = [];
+            var barDataDict = {};
             for (var idx in bardata) {
                 var item = bardata[idx];
-                if(item[0].startsWith(year)) {
-                    newBarData.push(item);
+                barDataDict[item[0]] = item[1];
+            }
+
+            var newBarData = [];
+            for (var i = 1; i<=12; i++) {
+                var key = year + "-" + String(i).padStart(2, "0");
+                if(key in barDataDict) {
+                    var monthName = monthNumToName(key.substr(-2));
+                    newBarData.push([monthName, barDataDict[key]]);
+                } else {
+                    var monthName = monthNumToName(key.substr(-2));
+                    newBarData.push([monthName, 0]);
                 }
             }
             return newBarData;
         }
 
         function updateBarChart() {
-            console.log('update bar chart');
-
             var correctionType = null;
             var year = null;
 
@@ -406,50 +546,83 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
              }
             }
 
-            var corMap = {'1': 'Minor Corrections', '2': 'Major Corrections', '3': 'Breaking News Updates'}
-            var corLabel = corMap[correctionType];
-            populateBarCharts(filterYear(barData[corLabel], year));
+            var data = [];
+            for (var i = 1; i<=12; i++) {
+                var key = year + "-" + String(i).padStart(2, "0");
+                var monthName = monthNumToName(key.substr(-2));
+                var majorNum = 0;
+                var minorNum = 0;
+                var breakingNum = 0;
+
+                // console.log(barData['Minor Corrections']);
+                var minorBarDataDict = {};
+                for (var idx in barData['Minor Corrections']) {
+                    var item = barData['Minor Corrections'][idx];
+                    minorBarDataDict[item[0]] = item[1];
+                }
+
+                var majorBarDataDict = {};
+                for (var idx in barData['Major Corrections']) {
+                    var item = barData['Major Corrections'][idx];
+                    majorBarDataDict[item[0]] = item[1];
+                }
+
+                var breakingBarDataDict = {};
+                for (var idx in barData['Breaking News Updates']) {
+                    var item = barData['Breaking News Updates'][idx];
+                    breakingBarDataDict[item[0]] = item[1];
+                }
+
+                if(key in minorBarDataDict) {
+                    minorNum = minorBarDataDict[key];
+                }
+                if(key in majorBarDataDict) {
+                    majorNum = majorBarDataDict[key];
+                }
+
+                if(key in breakingBarDataDict) {
+                    breakingNum = breakingBarDataDict[key];
+                }
+                data.push({
+                    "month": monthName, 
+                    "minorCorrections": String(minorNum),
+                    "majorCorrections": String(majorNum),
+                    "updates": String(breakingNum)
+                });
+            }
+            populateBarCharts(data);
         }
 
         function dataLoaded(error, correctionData) {
-            console.log("data loaded");
-            console.log(error);
+            $('#big-spinner').show();
             if(error) {
-                console.log("errrrrrrr");
                 console.log(error);
             } else {
                 console.log("no errr")
             }
-            console.log(correctionData);
-            console.log(correctionData.length);
             var res = transformToLyricData(correctionData);
             barData = transformToBarData(correctionData);
 
-            console.log("BAR DATA")
-            console.log(barData);
-
-            // var yearBarData = 
-
-            populateBarCharts(filterYear(barData['Major Corrections'], '2016'));
 
             createWordBarGraphs(res);
             buildTopWordLists(res);
             renderWordBarCharts(res);
             initRegionChecks(res);
 
+            updateBarChart();
 
             $(".barchart_radio").change(function() {
                 updateBarChart();
             });
-	         // //create empty graphs for all the unique words
-	         // createWordBarGraphs(lyricData);
-	         // buildTopWordLists(lyricData);
-	         // renderWordBarCharts(lyricData);
-	         // initRegionChecks(lyricData);			
+            $(".barchart_year").change(function() {
+                updateBarChart();
+            });
+            $('#big-spinner').hide();
         }
 
         function initRegionChecks(lyricData){
         	$("#minorCorrectionCheck").change(function() {
+                updateBarChart();
                 if(this.checked) {
                    handleChecked('Minor Corrections',lyricData);
                    $("#minorCorrectionFreq").removeClass("wordFade");
@@ -459,6 +632,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
                 }
             });
             $("#majorCorrectionCheck").change(function() {
+                updateBarChart();
                 if(this.checked) {
                    handleChecked('Major Corrections',lyricData);
                    $("#majorCorrectionFreq").removeClass("wordFade");
@@ -469,6 +643,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
                 }
             });
             $("#updateCheck").change(function() {
+                updateBarChart();
                 if(this.checked) {
                     handleChecked('Breaking News Updates',lyricData);
                     $("#updatesFreq").removeClass("wordFade");
@@ -534,55 +709,56 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
 
            var x = d3.scale.linear().domain([0, wordData.length]).range([0, barChartWidth]);
            var x1 = d3.scale.linear().domain([0, wordData.length-hiddenCount]).range([0,barChartWidth-(hiddenCount*barWidth)]);
-	       var y = d3.scale.linear().domain([21, 1])
-			  .range([0, barChartHeight]);
+  	       var y = d3.scale.linear().domain([21, 1])
+          			  .range([0, barChartHeight]);
 
-		var barGroup = barGraph.selectAll("g");
-	    if(barGroup.empty()){
-		    barGroup = barGraph.append("g");
-            barGroup.on("click",function(d){handleBarChartClicked(wordData);});
-		    
-	    }
-	
-	  var bars = barGroup.selectAll("rect").data(wordData,function(d){return d.region;});
-	
-	  bars
-	   .enter()
-	   .append("rect")
-	   .attr("x", function(d, i) { return x(i); })
-	   .attr("y",  function(d) { return barChartHeight; })
-       .attr("height", function(d) { return y(d.rank); })
-	   .attr("width", barWidth)
-	   .attr("stroke", "black")
-	   .attr("class", function(d){
-            if(d.region === "Minor Corrections")
-            	return "midwest";
-            if(d.region === "Major Corrections")
-            	return "east-coast";
-            if(d.region === "Breaking News Updates")
-            	return "west-coast";
-	    });
+      		var barGroup = barGraph.selectAll("g");
+    	    if(barGroup.empty()){
+    		    barGroup = barGraph.append("g");
+            // barGroup.on("click",function(d){handleBarChartClicked(wordData);});
+    		    
+    	    }
+      	
+      	  var bars = barGroup.selectAll("rect").data(wordData,function(d){return d.region;});
+      	
+      	  bars
+      	   .enter()
+      	   .append("rect")
+      	   .attr("x", function(d, i) { return x(i); })
+      	   .attr("y",  function(d) { return barChartHeight; })
+             .attr("height", function(d) { return y(d.rank); })
+      	   .attr("width", barChartWidth/3)
+      	   .attr("stroke", "black")
+      	   .attr("class", function(d){
+                  if(d.region === "Minor Corrections")
+                  	return "minor-correction";
+                  if(d.region === "Major Corrections")
+                  	return "major-correction";
+                  if(d.region === "Breaking News Updates")
+                  	return "update-correction";
+      	    });
 
-       var updatedIndex = 0;
-       bars.transition().duration(1000)
-	     .attr("y", function(d) { return barChartHeight - y(d.rank); })
-         .attr("height", function(d) { return y(d.rank); })
-         .attr("x", function(d,i){ var result = (d.rank < 21) ? x1(updatedIndex++) : x(i); return result});
+             var updatedIndex = 0;
+             bars.transition().duration(1000)
+      	     .attr("y", function(d) { return barChartHeight - y(d.rank); })
+               .attr("height", function(d) { return y(d.rank); })
+               .attr("x", function(d,i){ var result = (d.rank < 21) ? x1(updatedIndex++) : x(i); return result});
 
-       
+             
 
-       var wordText = barGroup.selectAll("text");
+             var wordText = barGroup.selectAll("text");
 
-       if(wordText.empty()){
-	       barGroup.append("text")
-             .attr("x", 0)
-             .attr("y", barChartHeight + 15)
-             .attr("class", "barWord")
-             .text(word.replace("_", " "))
-             .style("fill", "black")
-             .style("text-align", "center")
-             // .style("text-anchor", "middle")
-             .style("stroke", "black");
+             if(wordText.empty()){
+      	       barGroup.append("text")
+                   // .attr("x", 0)
+                   .attr("y", barChartHeight + 15)
+                   .attr("class", "barWord")
+                   .text(word.replace("_", " "))
+                   .style("fill", "black")
+                   .style("text-align", "center")
+                   .style("text-anchor", "beginning")
+                   .style("font-size", 12)
+                   .style("stroke", "black");
          }
          else{
          	if(wordData.length-hiddenCount == 0){
@@ -633,36 +809,36 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
             return words;
         }
 
-        function handleBarChartClicked(wordData){
+        // function handleBarChartClicked(wordData){
             
-            $("#minorCorrectionFreq").html("");
-            $("#majorCorrectionFreq").html("");
-            $("#updatesFreq").html("");
+        //     $("#minorCorrectionFreq").html("");
+        //     $("#majorCorrectionFreq").html("");
+        //     $("#updatesFreq").html("");
         	
-            for(var i=0;i<wordData.length;i++){
-        		var word = wordData[i];
-        		var frequentAppears = word.frequentAppears;
-        		if(frequentAppears.length > 10){
-        			frequentAppears = _.first(frequentAppears, [10]);
-        		}
-                frequentAppears = _.uniq(frequentAppears);
-                console.log(frequentAppears);
-        		var frequentAppearsStr = frequentAppears.join();
-        		var commonWord = word.commonWord;
-                if(word.region === 'Midwest'){
-                  $("#midwestFreq").html("In the "+"<span class='midwest'>"+"Midwest</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
-                }
-                else if(word.region === 'Southern'){
-                  $("#southernFreq").html("In the "+"<span class='southern'>"+"South</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
-                }
-                else if(word.region === 'East Coast'){
-                  $("#eastCoastFreq").html("On the "+"<span class='east-coast'>"+"East Coast</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
-                }
-                else if(word.region === 'West Coast'){
-                  $("#westCoastFreq").html("On the "+"<span class='west-coast'>"+"West Coast</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
-                }
-        	}
-        }
+        //     for(var i=0;i<wordData.length;i++){
+        // 		var word = wordData[i];
+        // 		var frequentAppears = word.frequentAppears;
+        // 		if(frequentAppears.length > 10){
+        // 			frequentAppears = _.first(frequentAppears, [10]);
+        // 		}
+        //         frequentAppears = _.uniq(frequentAppears);
+        //         console.log(frequentAppears);
+        // 		var frequentAppearsStr = frequentAppears.join();
+        // 		var commonWord = word.commonWord;
+        //         if(word.region === 'Midwest'){
+        //           $("#midwestFreq").html("In the "+"<span class='midwest'>"+"Midwest</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
+        //         }
+        //         else if(word.region === 'Southern'){
+        //           $("#southernFreq").html("In the "+"<span class='southern'>"+"South</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
+        //         }
+        //         else if(word.region === 'East Coast'){
+        //           $("#eastCoastFreq").html("On the "+"<span class='east-coast'>"+"East Coast</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
+        //         }
+        //         else if(word.region === 'West Coast'){
+        //           $("#westCoastFreq").html("On the "+"<span class='west-coast'>"+"West Coast</span>, <span class='wordHover'>"+commonWord+"</span> frequently appears with: "+frequentAppearsStr);
+        //         }
+        // 	}
+        // }
 
         function buildTopWordLists(lyricData){
         	var minorCorrectionWords = lyricData["Minor Corrections"];
@@ -703,187 +879,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore'],
         	for(var i=0;i<words.commonWords.length;i++){
         		list.append('<li>'+words.commonWords[i]['commonWord'].replace("_", " ")+'</li>')
         	}
-
         }
-
-        function drawMap(us,regionData,lyricData) {
-			        for(var i=0;i<regions.length;i++){
-				          var region = regions[i];
-				          var states = regionData[region];
-				          for(var j=0;j<states.length;j++){
-					          statesToRegion.set(states[j],region);
-				          }
-
-			          }
-		              svg.append("g")
-						 .selectAll("path")
-						 .data(topojson.feature(us, us.objects.states).features)
-						 .enter().append("path")
-						 .attr("class", function(d) { 
-							var state = d.properties.name;
-							var region = statesToRegion.get(state);
-							if(region === "East Coast")
-							    return "east-coast";
-							else if(region === "West Coast")
-							    return "west-coast";
-							else if(region === "Midwest")
-							    return "midwest";
-							else if(region === "Southern")
-							    return "southern";
-							//hack, hide the states that don't belong (Hawaii,Alaska,etc)
-							else
-							     return "hidden";
-						   })
-						 .attr("d", path)
-						 .on('mouseover',function(d){
-						 	var region = statesToRegion.get(d.properties.name);
-						 	var numSongs = lyricData[region].numSongs;
-						 	var numArtists = lyricData[region].numArtists;
-						 	var rappers;
-                            if(region === "East Coast")
-							    rappers = ['50 Cent', 'Biggie Smalls', "Jay-Z", 'Nas']
-							else if(region === "West Coast")
-							    rappers = ['Dr. Dre', 'Snoop Dogg', 'Tupac Shakur', 'Ice Cube', 'Easy-E'];
-							else if(region === "Midwest")
-							    rappers = ['Eminem', 'Machine Gun Kelly', 'Common', 'Atmosphere', 'Kanye West']
-							else if(region === "Southern")
-							    rappers = ['B.o.B','Flo Rida','Outkast','Lil John','Lil Wayne'];
-                          
-                             var rapperString = rappers.join();
-
-                              $("#region").html("<span class='wordHover'>"+region+"</span>")
-                              $("#numSongs").html("Number of songs analyzed: "+numSongs);
-                              $("#numArtists").html("Number of artists analyzed: "+numArtists);
-                              $("#artistSample").html("Includes artists such as "+rapperString);
-
-                              var tooltip = $("#tooltip");
-		                      tooltip.show();
-		                      tooltip.css({'top':d3.event.pageY,'left':d3.event.pageX});
-
-						 })
-                           .on("mousemove",function(d){
-			                $("#tooltip").css({
-		                   left:  d3.event.pageX + 10,
-		                   top:   d3.event.pageY + 20
-		                  });
-	                   })
-	               .on("mouseout",function(d){
-		                 $("#tooltip").hide();
-		           });
-
-					//draws a path for the inner borders states
-					//West Coast
-					svg.append("path")
-					   .datum(topojson.mesh(us,us.objects.states,function(a,b){
-						    var aState = a.properties.name;
-						    var bState = b.properties.name;
-						    var region = statesToRegion.get(aState);
-						    if(region !=="West Coast")
-						       return false;
-						    else{
-							    if(a===b)
-							     return true;
-							else{
-								if(aState==="Washington" || 
-								(aState==="Nevada" && bState!=="Oregon") || 
-								aState==="New Mexico" || 
-								(aState==="Arizona" && bState==="Utah")){
-								   return true;
-								}
-								else
-								   return false;
-							}
-
-						}
-
-						}))
-					   .attr("d",path)
-					   .attr("class","states");
-
-					   //Midwest
-						svg.append("path")
-						   .datum(topojson.mesh(us,us.objects.states,function(a,b){
-							    var aState = a.properties.name;
-								var bState = b.properties.name;
-								var region = statesToRegion.get(aState);
-								if(region !=="Midwest")
-								   return false;
-								else{
-									if(a===b)
-									  return true;
-									else{
-										if((aState==="Idaho" && (bState!=="Montana" && bState!=="Wyoming" && bState!=="Utah")) ||
-										    (aState==="Colorado" && (bState==="New Mexico" || bState==="Oklahoma")) ||
-										     (aState==="Kansas" && bState==="Oklahoma") || 
-										     aState==="Ohio" || 
-										     (aState==="Indiana" && (bState!=="Ohio" && bState!=="Michigan")) || 
-										     (aState==="Missouri" && bState !== "Nebraska") || 
-										     (aState==="Illinois" && bState==="Kentucky")){
-										   return true;
-										}
-										else
-										   return false;
-									}
-
-								}
-
-								}))
-							   .attr("d",path)
-							   .attr("class","states");
-
-					//Southern
-					svg.append("path")
-					   .datum(topojson.mesh(us,us.objects.states,function(a,b){
-						    var aState = a.properties.name;
-							var bState = b.properties.name;
-							var region = statesToRegion.get(aState);
-							if(region !=="Southern")
-							   return false;
-							else{
-								if(a===b)
-								  return true;
-								else{
-									if((aState==="Kentucky" && (bState!=="Tennessee" && bState!=="West Virginia" && bState!=="Virginia")) ||
-									   (aState==="Arkansas" && bState==="Missouri")){
-									    return true;
-									}
-									else
-									    return false;
-								}
-
-							}
-
-							}))
-						   .attr("d",path)
-						   .attr("class","states");	
-						//East Coast
-						svg.append("path")
-						   .datum(topojson.mesh(us,us.objects.states,function(a,b){
-							    var aState = a.properties.name;
-								var bState = b.properties.name;
-								var region = statesToRegion.get(aState);
-								if(region !=="East Coast")
-								   return false;
-								else{
-									if(a===b)
-									  return true;
-									else{
-										if(aState==="Pennsylvania" || 
-										  (aState==="Maryland" && bState !== "Pennsylvania"))
-										   return true;
-										else
-		                                   return false;
-									}
-
-								}
-
-								}))
-							   .attr("d",path)
-							   .attr("class","states");
-
-							   svg.selectAll("path").attr("transform", "translate(-80,0) scale(0.85)");
-}
-
 
     });
 });
