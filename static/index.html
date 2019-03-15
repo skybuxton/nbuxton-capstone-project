@@ -34,61 +34,15 @@
 <div id="container">
     <div id="barsSection" class="row">
 	    <div class="col-md-6 ">
-<!-- 			<h3>Filter Bar Chart</h3>
-			<p>Select Correction Type</p>
- --><!-- - 		<label style="display: inline;"><input type="radio" name="barchart_radio" class="barchart_radio" value="1" checked />
- 	Major Corrections
-			
-			</label>
-			<label style="display: inline;">
-						<input type="radio" name="barchart_radio" class="barchart_radio" value="2"  /> Minor Corrections</label>
-			<label style="display: inline;">			<input type="radio" name="barchart_radio" class="barchart_radio" value="3" checked />
- Breaking News Updates</label> -->
+
 	       <h2>Retractions and Corrections</h2>
-
-
-<!-- <h3>Introduction</h3> -->
 
 <p>
 Over the past five years, the World Economic Forum identified digital misinformation as one of the top ten global risks. The spread of false information has become an increasingly prominent topic of global public concern. Although misinformation, disinformation and propaganda have been used throughout history to influence public opinion —  the tectonic shifts in the online news ecosystem raises concerns about the vulnerability of democratic societies to the proliferation of misinformation. While a significant body of recent research has been done to classify news articles as misinformation, disinformation or fake news, there is a paucity of research on understanding the underlying associations for why an article may be deemed as “fake” or misinformation.  This capstone project aims to fill this gap by providing an objective and alternate approach to “fake news” by building a classification model to predict corrections and retractions in news articles. 
 </p>
-<!-- 
-	
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary active">
-    <input type="radio" name="barchart_radio" class="barchart_radio" value="1" checked /> Major Corrections
-  </label>
-  <label class="btn btn-secondary ">
-    <input type="radio" name="barchart_radio" class="barchart_radio" value="2" /> Minor Corrections
-  </label>
-  <label class="btn btn-secondary ">
-    <input type="radio" name="barchart_radio" class="barchart_radio" value="3" /> Breaking News Updates
-  </label>
-</div>
-
-	
-<div class="btn-group btn-group-toggle" data-toggle="buttons" id="year_buttons">
-  <label class="btn btn-primary active">
-    <input type="radio" name="barchart_year"  class="barchart_radio" value="2016" checked /> 2016
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="barchart_year"  class="barchart_radio" value="2015" /> 2015
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="barchart_year"  class="barchart_radio" value="2014" /> 2014
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="barchart_year"  class="barchart_radio" value="2013" /> 2013
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="barchart_year"  class="barchart_radio" value="2012" /> 2012
-  </label>
-
-</div> -->
 		</div>
 	    <div class="col-md-6">
 
-	    	<!-- <h2>Most common bi-grams</h2> -->
 	   	    <div id="top20Lists" class="row" style="margin-left: 0px;">
 		        <div class="col-md-4 columns wordList" style="padding-left: 0px;">
 		            <h4>Minor Correction</h4>
@@ -108,8 +62,7 @@ Over the past five years, the World Economic Forum identified digital misinforma
 	  </div>
     <div id="barsSection2" class="row">
 	    <div class="col-md-6">
-	    		    	<!-- <h2>Number of Retractions (yearly)</h2> -->
-	        <div id="barchart"></div>
+        <div id="barchart"></div>
 	    </div>
 
 	    <div class="col-md-6">
@@ -176,8 +129,8 @@ Over the past five years, the World Economic Forum identified digital misinforma
 
 	 </div>
      <div id="barsSection3" class="row">
-		<div class="col-md-2"> </div>
-		<div class="col-md-8">
+		<div class="col-md-1"> </div>
+		<div class="col-md-10">
 
 <ul class="nav nav-tabs" role="tablist">
   <li class="nav-item">
@@ -197,6 +150,15 @@ Over the past five years, the World Economic Forum identified digital misinforma
  </li>
   <li class="nav-item">
     <a class="nav-link" href="#t6" aria-controls="t6" role="tab" data-toggle="tab">Peliminary Findings</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t7" aria-controls="t7" role="tab" data-toggle="tab">F1 Scores</a>
+ </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#t8" aria-controls="t8" role="tab" data-toggle="tab">Technology</a>
+ </li>
+ <li class="nav-item">
+    <a class="nav-link" href="#t9" aria-controls="t9" role="tab" data-toggle="tab">Python Notebook</a>
  </li>
 </ul>
 
@@ -274,11 +236,29 @@ Over the past five years, the World Economic Forum identified digital misinforma
   <div role="tabpanel" class="tab-pane" id="t6">
 <p>I found that Xtreme Gradient Boosting has the highest accuracy at 82%. Additionally, I found that more articles get updated for events that happen earlier in the day. Articles with the phrase “spokesman said” do not get corrected. Further analysis will be completed to identify trends in the data and improve accuracy. </p>
 
-<p>INSERT graph [screen shot] with the table with f1 score, precision and recall. So that we can shpw that we accounted for balanced classes </p>
+<p><img src='img/f1_prec_recall_table.png' /></p>
   </div>
+  <div role="tabpanel" class="tab-pane" id="t7">
+    <p><img src='img/f1_graph.png' /></p>
   </div>
+  <div role="tabpanel" class="tab-pane" id="t8" style="min-height: 100%; overflow: hidden;">
+    <p>Technical Details</p>
+    <ul>
+      <li>MySQL database for all the scraped data</li>
+      <li>Scrapers which downloaded article text from GDELT links in Python</li>
+      <li>scikit learn and xgboost in a Jupyter notebook for analysis</li>
+      <li>Bootstrap and D3 for this site</li>
+    </ul>
+  </div>
+    <div role="tabpanel" class="tab-pane" id="t9">
+
+<div class="iframely-embed"><div class="iframely-responsive" style="padding-bottom: 100%;"><a href="https://gist.github.com/skybuxton/09166e67a8462d1db95a850bbaf42e19" data-iframely-url="//cdn.iframe.ly/TI5QKv8"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
+
 </div>
-<div class="col-md-2"> </div>
+</div>
+
+
+<div class="col-md-1"> </div>
 
 
 </div>
