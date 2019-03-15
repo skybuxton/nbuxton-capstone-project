@@ -8,10 +8,6 @@ var runModel = function(text) {
 	  },
 	  dataType: 'json'
 	});
-	return {
-		"category": "Minor Correction",
-		"accuracy": "84.2%"
-	}
 };
 
 var runModelFromModal = function() {
