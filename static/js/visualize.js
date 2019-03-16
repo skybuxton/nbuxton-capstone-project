@@ -147,7 +147,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
 
 
         function populateBarCharts(barchartData) {
-            var margin = {top: 20, right: 160, bottom: 35, left: 30};
+            var margin = {top: 20, right: 20, bottom: 100, left: 20};
             // var width = 760 - margin.left - margin.right, // 960
 
             var width = 760 - margin.left - margin.right,
@@ -262,31 +262,27 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
 
 
             // Draw legend
-            // var legend = svg.selectAll(".legend")
-            //   .data(colors)
-            //   .enter().append("g")
-            //   .attr("class", "legend")
-            //   .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+            var legend = svg.selectAll(".legend")
+              .data(colors)
+              .enter().append("g")
+              .attr("class", "legend")
+              .attr("transform", function(d, i) { return "translate(30, " + i * 19 + ")"; });
              
-            // legend.append("rect")
-            //   .attr("x", width - 18)
-            //   .attr("width", 18)
-            //   .attr("height", 18)
-            //   .style("fill", function(d, i) {return colors.slice()[i];});
+            legend.append("rect")
+              .attr("x", 5)
+              .attr("y", height + 30)
+              .attr("width", 18)
+              .attr("height", 18)
+              .style("fill", function(d, i) {return colors.slice()[i];});
              
-            // legend.append("text")
-            //   .attr("x", width + 5)
-            //   .attr("y", 9)
-            //   .attr("dy", ".35em")
-            //   .style("text-anchor", "start")
-            //   .text(function(d, i) { 
-            //     return labels[i];
-            //     // switch (i) {
-            //     //   case 0: return "Major Corrections";
-            //     //   case 1: return "Minor Corrections";
-            //     //   case 2: return "Breaking News Updates";
-            //     // }
-            //   });
+            legend.append("text")
+              .attr("x", 28)
+              .attr("y", height + 30+9)
+              .attr("dy", ".35em")
+              .style("text-anchor", "start")
+              .text(function(d, i) { 
+                return labels[i];
+              });
 
 
             // Prep the tooltip bits, initial display is hidden
