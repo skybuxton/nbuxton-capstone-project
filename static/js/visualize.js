@@ -335,6 +335,21 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
             return ret;
         }
 
+        function top10List(top10) {
+            var ret = [];
+            for (var idx in top10) {
+                var actualWord = top10[idx];
+                var wordObj = {
+                    "commonWord": actualWord,
+                    "rank": idx,
+                    "frequentAppears": []
+                };
+                ret.push(wordObj);
+            }
+            return ret;
+
+        }
+
         function barDictToList(dict) {
             var items = Object.keys(dict).map(function(key) {
               return [key, dict[key]];
@@ -390,72 +405,77 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
         }
 
         function transformToLyricData(corectionData) {
-            var minorCorrectionWords = {};
-            var majorCorrectionWords = {};
-            var updateWords = {};
+            // var minorCorrectionWords = {};
+            // var majorCorrectionWords = {};
+            // var updateWords = {};
 
-            var stopWords = ["isn't", 'just', 'wouldn', 'not', "hadn't", 'yours', 'i', 'then', 'to', 'she', 'can', "you'd", "weren't", 'or', "you're", 'd', 'who', 'her', 'these', 'how', 'do', 'was', 'm', 'and', 'because', 'won', 'am', 'until', 'the', 'our', 'this', 'such', 'herself', 'didn', 'for', 'does', 'mustn', 'but', 'off', "should've", 'did', 'by', 'his', 'few', 'their', "that'll", 'out', 'shouldn', 'haven', 'at', 'when', 'its', "won't", 'no', 'why', 'above', 'over', 'if', 'now', 'don', 'had', 'you', 'be', 'o', 'each', 'll', 'him', 'more', 'aren', 'ourselves', 'once', 'further', 'as', 're', 'a', 'hers', 'have', 'on', 'whom', 'mightn', 'in', 'has', 'hasn', 'shan', 'been', 'which', 'yourself', "don't", 'weren', 'were', 'they', 'again', 'both', 'while', 'me', 'my', 'up', 'own', 'same', 'your', 'before', 'an', 'needn', 'it', 'most', 'any', 'doing', 'so', 'with', 'through', 'after', "wouldn't", "needn't", 'having', 'what', 'hadn', 'into', "she's", 'he', 'all', "you'll", 'we', 'during', "haven't", 'being', "doesn't", 'below', 'under', 'than', "couldn't", 'ours', 't', 'down', "shouldn't", "mightn't", 'wasn', 'doesn', 've', 'yourselves', "wasn't", 'couldn', 'about', 'here', 'where', 'ain', 'from', 'against', 'nor', 'too', 'is', 'only', 'itself', 'himself', 'them', 's', 'some', "didn't", "it's", 'will', "you've", 'there', 'between', 'are', 'myself', 'y', 'theirs', 'that', 'those', 'other', 'should', "aren't", 'isn', 'of', 'very', "hasn't", 'ma', 'themselves', "mustn't", "shan't", 'â€”'];
-            stopWords.push("said");
-            stopWords.push("would");
-            stopWords.push("one");
-            stopWords.push("state");
-            stopWords.push("new");
-            stopWords.push("also");
-            stopWords.push("said.");
-            stopWords.push("u.s.");
+            // var stopWords = ["isn't", 'just', 'wouldn', 'not', "hadn't", 'yours', 'i', 'then', 'to', 'she', 'can', "you'd", "weren't", 'or', "you're", 'd', 'who', 'her', 'these', 'how', 'do', 'was', 'm', 'and', 'because', 'won', 'am', 'until', 'the', 'our', 'this', 'such', 'herself', 'didn', 'for', 'does', 'mustn', 'but', 'off', "should've", 'did', 'by', 'his', 'few', 'their', "that'll", 'out', 'shouldn', 'haven', 'at', 'when', 'its', "won't", 'no', 'why', 'above', 'over', 'if', 'now', 'don', 'had', 'you', 'be', 'o', 'each', 'll', 'him', 'more', 'aren', 'ourselves', 'once', 'further', 'as', 're', 'a', 'hers', 'have', 'on', 'whom', 'mightn', 'in', 'has', 'hasn', 'shan', 'been', 'which', 'yourself', "don't", 'weren', 'were', 'they', 'again', 'both', 'while', 'me', 'my', 'up', 'own', 'same', 'your', 'before', 'an', 'needn', 'it', 'most', 'any', 'doing', 'so', 'with', 'through', 'after', "wouldn't", "needn't", 'having', 'what', 'hadn', 'into', "she's", 'he', 'all', "you'll", 'we', 'during', "haven't", 'being', "doesn't", 'below', 'under', 'than', "couldn't", 'ours', 't', 'down', "shouldn't", "mightn't", 'wasn', 'doesn', 've', 'yourselves', "wasn't", 'couldn', 'about', 'here', 'where', 'ain', 'from', 'against', 'nor', 'too', 'is', 'only', 'itself', 'himself', 'them', 's', 'some', "didn't", "it's", 'will', "you've", 'there', 'between', 'are', 'myself', 'y', 'theirs', 'that', 'those', 'other', 'should', "aren't", 'isn', 'of', 'very', "hasn't", 'ma', 'themselves', "mustn't", "shan't", 'â€”'];
+            // stopWords.push("said");
+            // stopWords.push("would");
+            // stopWords.push("one");
+            // stopWords.push("state");
+            // stopWords.push("new");
+            // stopWords.push("also");
+            // stopWords.push("said.");
+            // stopWords.push("u.s.");
 
-            var prevWord = null;
-            for(var idx in corectionData) {
-                var item = corectionData[idx];
-                // console.log(item);
-                var text = item["body"];
-                var correctionType = item["correction_type"];
-                // console.log(correctionType);
-                var allWordsInBody = text.split(" ");
-                var dict = minorCorrectionWords;
-                if(correctionType == 1) {
-                    dict = minorCorrectionWords;
-                } else if(correctionType == 2) {
-                    dict = majorCorrectionWords;
-                } else {
-                    dict = updateWords;
-                }
-                for (var wordIdx in allWordsInBody) {
-                    var word = allWordsInBody[wordIdx];
-                    word = word.toLowerCase();
-                    word = word.replace(/[^a-z]/gi, '');
-                    if(word != '') {
-                        if(stopWords.indexOf(word) == -1) {
-                            if(prevWord != null) {
-                                var newWord = prevWord + "_" + word;
-                                if (newWord in dict) {
-                                    dict[newWord] = dict[newWord] + 1;
-                                } else {
-                                    dict[newWord] = 1;
-                                }
-                            }
-                            prevWord = word;
-                        }
-                    }
-                }
-            }
+            // var prevWord = null;
+            // for(var idx in corectionData) {
+            //     var item = corectionData[idx];
+            //     // console.log(item);
+            //     var text = item["body"];
+            //     var correctionType = item["correction_type"];
+            //     // console.log(correctionType);
+            //     var allWordsInBody = text.split(" ");
+            //     var dict = minorCorrectionWords;
+            //     if(correctionType == 1) {
+            //         dict = minorCorrectionWords;
+            //     } else if(correctionType == 2) {
+            //         dict = majorCorrectionWords;
+            //     } else {
+            //         dict = updateWords;
+            //     }
+            //     for (var wordIdx in allWordsInBody) {
+            //         var word = allWordsInBody[wordIdx];
+            //         word = word.toLowerCase();
+            //         word = word.replace(/[^a-z]/gi, '');
+            //         if(word != '') {
+            //             if(stopWords.indexOf(word) == -1) {
+            //                 if(prevWord != null) {
+            //                     var newWord = prevWord + "_" + word;
+            //                     if (newWord in dict) {
+            //                         dict[newWord] = dict[newWord] + 1;
+            //                     } else {
+            //                         dict[newWord] = 1;
+            //                     }
+            //                 }
+            //                 prevWord = word;
+            //             }
+            //         }
+            //     }
+            // }
             // console.log(updateWords);
             // console.log(top10words(updateWords));
             // console.log(minorCorrectionWords);
             // console.log(majorCorrectionWords);
 
+            // These are precalculated from Python
+            // for speed! JS above is commented out
 
             var result = {
                 "Minor Corrections": {
-                    "commonWords": top10words(minorCorrectionWords),
+                    // "commonWords": top10words(minorCorrectionWords),
+                    "commonWords": top10List(["new_york", "united_states", "supreme_court", "law_enforcement", "high_school", "years_ago", "white_house", "story_updated", "police_department", "donald_trump"])
                     // "numArticles": 0
                 },
                 "Major Corrections": {
-                    "commonWords": top10words(majorCorrectionWords),
+                    // "commonWords": top10words(majorCorrectionWords),
+                    "commonWords": top10List(["new_york", "united_states", "white_house", "supreme_court", "vice_president", "law_enforcement", "years_ago", "donald_trump", "islamic_state", "correction_story"])
                     // "numArticles": 0
                 },
                 "Breaking News Updates": {
-                    "commonWords": top10words(updateWords),
+                    // "commonWords": top10words(updateWords),
+                    "commonWords": top10List(["united_states", "new_york", "county_sheriffs", "sheriffs_office", "law_enforcement", "police_department", "white_house", "state_police", "supreme_court", "donald_trump"])
                     // "numArticles": 0
                 },
             }

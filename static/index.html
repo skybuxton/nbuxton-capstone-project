@@ -104,10 +104,10 @@ Over the past five years, the World Economic Forum identified digital misinforma
    		    <div>
            	  <div class="form-check">
 				<label style="display: inline;">
-					<input type="radio" name="barchart_year"  class="barchart_radio" value="2017"  checked /> 2017
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2017"   /> 2017
 				</label>
 				<label style="display: inline;">
-					<input type="radio" name="barchart_year"  class="barchart_radio" value="2016"  /> 2016
+					<input type="radio" name="barchart_year"  class="barchart_radio" value="2016" checked /> 2016
 				</label>
 				<label style="display: inline;">
 					<input type="radio" name="barchart_year"  class="barchart_radio" value="2015"  /> 2015
@@ -266,6 +266,10 @@ Over the past five years, the World Economic Forum identified digital misinforma
 
 
 </div>
+<div class="row" style="height: 800px">
+  &nbsp;
+</div>
+
 <div id="divider"></div>
 <div class="credit">
 
@@ -277,12 +281,17 @@ Navarra Buxton - navarrabuxton [at] gmail [dot] com
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Paste in text of a newspaper article</h4>
-                </div>
-                <div class="modal-body">
-                    <textarea class="form-control col-xs-12" id="inputTextarea" style="height: 400px;"></textarea>
-                </div>
-                <div class="modal-footer">
+              <h4 class="modal-title" id="myModalLabel">Paste in text of a newspaper article</h4>
+              </div>
+              <div class="modal-body">
+                  <textarea class="form-control col-xs-12" id="inputTextarea" style="height: 400px;"></textarea>
+                  <br/><br/>
+                  <button type="button" class="btn btn-default" onclick="prefillTextArea('No Correction');">No Correction</button>
+                  <button type="button" class="btn btn-default" onclick="prefillTextArea('Minor Correction');">Minor Correction</button>
+                  <button type="button" class="btn btn-default" onclick="prefillTextArea('Major Correction');">Major Correction</button>
+                  <button type="button" class="btn btn-default" onclick="prefillTextArea('Breaking News Update');">Breaking News Update</button>
+              </div>
+              <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="runModelFromModal();">Run Model!</button>
             </div>
