@@ -224,8 +224,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
 
             var xAxis = d3.svg.axis()
               .scale(x)
-              .orient("bottom")
-              // .tickFormat(d3.time.format("%Y"));
+              .orient("bottom");
 
             svg.append("g")
               .attr("class", "y axis")
@@ -260,7 +259,7 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
                 tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                 tooltip.select("text").text(d.y);
               });
-
+            rect.transition().duration(1000)
 
             // Draw legend
             var legend = svg.selectAll(".legend")
@@ -285,6 +284,25 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
                 return labels[i];
               });
 
+            // Bottom label
+            // bottomLabel.append("rect")
+            //   .attr("x", (width/2))
+            //   .attr("y", height + 30)
+            //   .attr("width", 100)
+            //   .attr("height", 18)
+            //   .style("fill", "#333333")
+            svg.append("text")             
+              .attr("transform",
+                  "translate(" + (width/2) + " ," + 
+                                 (height + margin.top + 20) + ")")
+            .style("text-anchor", "middle")
+            .text("Month");
+
+            svg.append("text")             
+              .attr("transform",
+                  "translate(" + (width/2)+ ", 0)")
+            .style("text-anchor", "middle")
+            .text("Number of Articles by Month");
 
             // Prep the tooltip bits, initial display is hidden
             var tooltip = svg.append("g")
