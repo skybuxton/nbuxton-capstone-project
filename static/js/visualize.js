@@ -153,6 +153,9 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
             var width = 760 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
 
+            var contWidth = $('#barchart').width();
+            console.log("size = " + contWidth)
+            width = contWidth - margin.left - margin.right
 
 
             var svgContainer = d3.select("#barchart")
@@ -160,8 +163,6 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
                 //     svg.select('svg').remove();
                 // }
 
-                var contWidth = $('#barchart').width();
-                // console.log("size = " + )
                var svg = svgContainer.append("svg")
               .attr("width", contWidth + (margin.left + margin.right))
               .attr("height", height + margin.top + margin.bottom)
