@@ -6,3 +6,4 @@ bokeh==1.0.2
 scikit-learn==0.20.3
 xgboost==0.82
 nltk==3.4
+Unidecode==1.0.23

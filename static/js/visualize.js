@@ -465,12 +465,12 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
             var result = {
                 "Minor Corrections": {
                     // "commonWords": top10words(minorCorrectionWords),
-                    "commonWords": top10List(["new_york", "united_states", "supreme_court", "law_enforcement", "high_school", "years_ago", "white_house", "story_updated", "police_department", "donald_trump"])
+                    "commonWords": top10List(["new_york", "united_states", "supreme_court", "law_enforcement", "high_school", "years_ago", "white_house", "police_department", "donald_trump", "san_bernardino"])
                     // "numArticles": 0
                 },
                 "Major Corrections": {
                     // "commonWords": top10words(majorCorrectionWords),
-                    "commonWords": top10List(["new_york", "united_states", "white_house", "supreme_court", "vice_president", "law_enforcement", "years_ago", "donald_trump", "islamic_state", "correction_story"])
+                    "commonWords": top10List(["new_york", "united_states", "white_house", "supreme_court", "vice_president", "law_enforcement", "years_ago", "donald_trump", "islamic_state", "attorney_general"])
                     // "numArticles": 0
                 },
                 "Breaking News Updates": {
