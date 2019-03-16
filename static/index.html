@@ -40,6 +40,7 @@
 <p>
 Over the past five years, the World Economic Forum identified digital misinformation as one of the top ten global risks. The spread of false information has become an increasingly prominent topic of global public concern. Although misinformation, disinformation and propaganda have been used throughout history to influence public opinion —  the tectonic shifts in the online news ecosystem raises concerns about the vulnerability of democratic societies to the proliferation of misinformation. While a significant body of recent research has been done to classify news articles as misinformation, disinformation or fake news, there is a paucity of research on understanding the underlying associations for why an article may be deemed as “fake” or misinformation.  This capstone project aims to fill this gap by providing an objective and alternate approach to “fake news” by building a classification model to predict corrections and retractions in news articles. 
 </p>
+
 		</div>
 	    <div class="col-md-6">
 
@@ -60,6 +61,57 @@ Over the past five years, the World Economic Forum identified digital misinforma
 
 	    </div>
 	  </div>
+       <div class="row">
+    <div class="col-md-3"> </div>
+    <div class="col-md-6" style="text-align: center;">
+      <hr/>
+
+<!-- <p>The bar charts represent how common the word is . The higher the bar, the more common the word. Click a bar chart to view words that frequently appear with the selected word, as well as use the checkboxes to filter out specific regions. Finally, scroll down to view the rankings of each word, for each region. Here you can hover over the words to see it across all regions.</p> -->
+<p style="color: #999;">The bar chart on the left illustrates the number of articles by month. The bar chart on the right represents the most common bi-grams that appear in articles that contain a correction. The higher the bar, the more common the words. You can filter by year and correction type for all of the graphs below. You can also scroll up to see the ranking of each word.</p>
+
+           <div id="regionChecks">
+              <div class="form-check">
+               <label style="display: inline;" class="form-check-label">
+                 <input name="minorCorrectionCheck" id="minorCorrectionCheck" type="checkbox" checked="yes"> Minor Correction
+               </label>
+               <label style="display: inline;" class="form-check-label">
+                 <input name="majorCorrectionCheck" id="majorCorrectionCheck" type="checkbox" checked="yes"> Major Correction
+               </label>
+               <label style="display: inline;" class="form-check-label">
+                 <input name="updateCheck" id="updateCheck" type="checkbox" checked="yes"> Breaking News Update
+               </label>
+           </div>
+           </div>
+
+
+          <div>
+              <div class="form-check">
+        <label style="display: inline;">
+          <input type="radio" name="barchart_year"  class="barchart_radio" value="2017"   /> 2017
+        </label>
+        <label style="display: inline;">
+          <input type="radio" name="barchart_year"  class="barchart_radio" value="2016" checked /> 2016
+        </label>
+        <label style="display: inline;">
+          <input type="radio" name="barchart_year"  class="barchart_radio" value="2015"  /> 2015
+        </label>
+        <label style="display: inline;">
+          <input type="radio" name="barchart_year"  class="barchart_radio" value="2014"  /> 2014
+        </label>
+        <label style="display: inline;">
+          <input type="radio" name="barchart_year"  class="barchart_radio" value="2013"  /> 2013
+        </label> 
+        </div>
+        </div>
+
+        <hr/>
+
+    </div>
+
+    <div class="col-md-3"> </div>
+
+   </div>
+
     <div id="barsSection2" class="row">
 	    <div class="col-md-6">
         <div id="barchart"></div>
@@ -79,12 +131,18 @@ Over the past five years, the World Economic Forum identified digital misinforma
 	 	<div class="col-md-4" style="text-align: center;">
 	 		<hr/>
 	 		<div style="margin: 20px">
+        <p>Click "Run Model" and paste an article in to see how the model categorizes it.</p>
+
 		        <button type="button" value="Decline" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#inputModal">Run Model</button>
 
 	 		</div>
 
 
 	 			    	<hr/>
+
+
+<!-- 
+<p>The bar charts represent how common the word is in a given region. The higher the bar, the more common the word. Click a bar chart to view words that frequently appear with the selected word, as well as use the checkboxes to filter out specific regions. Finally, scroll down to view the rankings of each word, for each region. Here you can hover over the words to see it across all regions.</p>
 
            <div id="regionChecks">
            	  <div class="form-check">
@@ -120,8 +178,8 @@ Over the past five years, the World Economic Forum identified digital misinforma
 				</label> 
 			  </div>
 		    </div>
-
-	    	<hr/>
+        <hr/>
+ -->
 
 		</div>
 
@@ -209,24 +267,23 @@ Over the past five years, the World Economic Forum identified digital misinforma
 <li>Normalizing Numbers: All numbers in the sentences are replaced with the text “number”.</li>
 </ul>
 
+  </div>
+  <div role="tabpanel" class="tab-pane" id="t5">
+
+<br/>
 <h5>Word Embeddings as features</h5>
 <p>This method represents words and documents using a dense vector representation. I used a pre-trained embedder trained by fasttext on all text from Wikipedia 2017. First I downloaded the pre-trained word embedding vector, then I created a tokenizer object and transformed the text documents to sequence of tokens and padded them. </p>
 
 <h5>Topic Models as features</h5>
 <p>I used topic modelling to identify the groups of words from the corpus. I used Latent Dirichlet Allocation to generate the features. I started with a fixed number of topics. The probability distributions over the words from the topics provided insight into the different themes in the documents. </p>
 
-<h5>Model Building</h5>
-<p>Once the feature engineering was completed, I trained a classifier using the features created during the feature engineering phase. I implemented the following different classifiers: 1) Logistic Regression 2) Naive Bayes Classifier 3) Support Vector Machine 4) Random Forests 5) Xtreme Gradient Boosting.</p>
-
-  </div>
-  <div role="tabpanel" class="tab-pane" id="t5">
-<p>In order to extract relevant textual features, I transformed the data into feature vectors. I used count vectors, TF-IDF, word embeddings and topic modeling to extract features from the dataset. Below is an overview of each feature engineering method</p>
+<p>In order to extract relevant textual features, I transformed the data into feature vectors. I used count vectors, TF-IDF, word embeddings and topic modeling to extract features from the dataset. Below is an overview of each feature engineering method. </p>
 
 <h5>Count Vectors as features: </h5>
 <p>To implement this matrix notation of the dataset in Python, I created a count vectorizer object, which transformed the training and test data. </p>
 
 <h5>TF-IDF Vectors as features:</h5>
-<p>The TF-IDF score represents the relative importance of a term in the document and corpus. The TF-IDF vectors were generated at the word level, n-gram level and the character level</p>
+<p>The TF-IDF score represents the relative importance of a term in the document and corpus. The TF-IDF vectors were generated at the word level, n-gram level and the character level. </p>
 <ul>
 <li>The word level TF-IDF: matrix that represents the scores of all terms in different documents. </li>
 <li>The n-gram level TF-IDF: matrix that represents the TF-IDF scores of the n–grams. </li>
@@ -234,23 +291,33 @@ Over the past five years, the World Economic Forum identified digital misinforma
 </ul>
   </div>
   <div role="tabpanel" class="tab-pane" id="t6">
-    <p>I found that Xtreme Gradient Boosting has the highest accuracy at 82%. Additionally, I found that more articles get updated for events that happen earlier in the day. Articles with the phrase “spokesman said” do not get corrected. Further analysis will be completed to identify trends in the data and improve accuracy. </p>
+    <br/>
+<h5>Model Building and Results</h5>
+<p>To build the model, I trained a classifier using the features created during the feature engineering phase. I implemented the following different classifiers: 1) Logistic Regression 2) Naive Bayes Classifier 3) Support Vector Machine 4) Random Forests 5) Xtreme Gradient Boosting.</p>
+
+    <p>I found that Xtreme Gradient Boosting peformed the best, with an F1 score of 84%. The graph and table below show the performance of each classifier. The graph shows each classfier by f1 score. The table shows each classifier by f1 score, precision, recall, accuracy, and jacqard. Additionally, I found that more articles get updated for events that happen earlier in the day than for events that happen later in the day. Articles with the phrase “spokesman said” do not get corrected. </p>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-3"> </div>
+      <div class="col-md-6" style="text-align: center">
         <p><img src='img/f1_graph.png' width="100%" /></p>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3"> </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"> </div>
+      <div class="col-md-6" style="text-align: center">
         <p><img src='img/f1_prec_recall_table.png' width="100%" /></p>
       </div>
+      <div class="col-md-3"> </div>
     </div>
   </div>
   <div role="tabpanel" class="tab-pane" id="t7" style="min-height: 100%; overflow: hidden;">
     <p>Technical Details</p>
     <ul>
       <li>MySQL database for all the scraped data</li>
-      <li>Scrapers which downloaded article text from GDELT links in Python</li>
-      <li>scikit learn and xgboost in a Jupyter notebook for analysis</li>
+      <li>Python scrapers for downloading article text from GDELT links</li>
+      <li>scikit-learn and xgboost in a Jupyter notebook for analysis</li>
       <li>Bootstrap and D3 for this site</li>
     </ul>
   </div>
