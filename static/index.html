@@ -149,17 +149,17 @@ Over the past five years, the World Economic Forum identified digital misinforma
     <a class="nav-link" href="#t5" aria-controls="t5" role="tab" data-toggle="tab">Feature Engineering</a>
  </li>
   <li class="nav-item">
-    <a class="nav-link" href="#t6" aria-controls="t6" role="tab" data-toggle="tab">Peliminary Findings</a>
+    <a class="nav-link" href="#t6" aria-controls="t6" role="tab" data-toggle="tab">Results</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#t7" aria-controls="t7" role="tab" data-toggle="tab">F1 Scores</a>
+    <a class="nav-link" href="#t7" aria-controls="t7" role="tab" data-toggle="tab">Technology</a>
  </li>
   <li class="nav-item">
-    <a class="nav-link" href="#t8" aria-controls="t8" role="tab" data-toggle="tab">Technology</a>
+    <a class="nav-link" href="#t8" aria-controls="t8" role="tab" data-toggle="tab">Python Notebook</a>
  </li>
- <li class="nav-item">
-    <a class="nav-link" href="#t9" aria-controls="t9" role="tab" data-toggle="tab">Python Notebook</a>
- </li>
+<!--  <li class="nav-item">
+    <a class="nav-link" href="#t9" aria-controls="t9" role="tab" data-toggle="tab"></a>
+ </li> -->
 </ul>
 
 
@@ -234,14 +234,18 @@ Over the past five years, the World Economic Forum identified digital misinforma
 </ul>
   </div>
   <div role="tabpanel" class="tab-pane" id="t6">
-<p>I found that Xtreme Gradient Boosting has the highest accuracy at 82%. Additionally, I found that more articles get updated for events that happen earlier in the day. Articles with the phrase “spokesman said” do not get corrected. Further analysis will be completed to identify trends in the data and improve accuracy. </p>
+    <p>I found that Xtreme Gradient Boosting has the highest accuracy at 82%. Additionally, I found that more articles get updated for events that happen earlier in the day. Articles with the phrase “spokesman said” do not get corrected. Further analysis will be completed to identify trends in the data and improve accuracy. </p>
 
-<p><img src='img/f1_prec_recall_table.png' /></p>
+    <div class="row">
+      <div class="col-md-6">
+        <p><img src='img/f1_graph.png' width="100%" /></p>
+      </div>
+      <div class="col-md-6">
+        <p><img src='img/f1_prec_recall_table.png' width="100%" /></p>
+      </div>
+    </div>
   </div>
-  <div role="tabpanel" class="tab-pane" id="t7">
-    <p><img src='img/f1_graph.png' /></p>
-  </div>
-  <div role="tabpanel" class="tab-pane" id="t8" style="min-height: 100%; overflow: hidden;">
+  <div role="tabpanel" class="tab-pane" id="t7" style="min-height: 100%; overflow: hidden;">
     <p>Technical Details</p>
     <ul>
       <li>MySQL database for all the scraped data</li>
@@ -250,7 +254,7 @@ Over the past five years, the World Economic Forum identified digital misinforma
       <li>Bootstrap and D3 for this site</li>
     </ul>
   </div>
-    <div role="tabpanel" class="tab-pane" id="t9">
+    <div role="tabpanel" class="tab-pane" id="t8">
 
 <div class="iframely-embed"><div class="iframely-responsive" style="padding-bottom: 100%;"><a href="https://gist.github.com/skybuxton/09166e67a8462d1db95a850bbaf42e19" data-iframely-url="//cdn.iframe.ly/TI5QKv8"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
@@ -294,7 +298,7 @@ Navarra Buxton - navarrabuxton [at] gmail [dot] com
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
                 </div>
                 <div class="modal-body">
-                	<h3 id="resultName"></h3>
+                  <p>The text you submitted has been labelled as a <b id="resultName"></b>!</p>
                 	<p id="resultAccuracy"></p>
                 </div>
                 <div class="modal-footer">

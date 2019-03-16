@@ -168,40 +168,6 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            // // responsive
-            //     var bounds = svg.node().getBoundingClientRect(),
-            //       width = bounds.width - margin.left - margin.right,
-            //       height = bounds.height - margin.top - margin.bottom;
-
-            //     x.rangeRound([0, width]);
-            //     y.rangeRound([height, 0]);
-
-            //     svg 
-
-            //     g.select(".axis--x")
-            //       .attr("transform", "translate(0," + height + ")")
-            //       .call(d3.axisBottom(x));
-
-            //     g.select(".axis--y")
-            //       .call(d3.axisLeft(y).ticks(10, "%"));
-
-
-
-            /* Data in strings like it would be if imported from a csv */
-
-            // var data = [
-            //   { year: "2006", redDelicious: "10", mcintosh: "15", oranges: "9", pears: "6" },
-            //   { year: "2007", redDelicious: "12", mcintosh: "18", oranges: "9", pears: "4" },
-            //   { year: "2008", redDelicious: "05", mcintosh: "20", oranges: "8", pears: "2" },
-            //   { year: "2009", redDelicious: "01", mcintosh: "15", oranges: "5", pears: "4" },
-            //   { year: "2010", redDelicious: "02", mcintosh: "10", oranges: "4", pears: "2" },
-            //   { year: "2011", redDelicious: "03", mcintosh: "12", oranges: "6", pears: "3" },
-            //   { year: "2012", redDelicious: "04", mcintosh: "15", oranges: "8", pears: "1" },
-            //   { year: "2013", redDelicious: "06", mcintosh: "11", oranges: "9", pears: "4" },
-            //   { year: "2014", redDelicious: "10", mcintosh: "13", oranges: "9", pears: "5" },
-            //   { year: "2015", redDelicious: "16", mcintosh: "19", oranges: "6", pears: "9" },
-            //   { year: "2016", redDelicious: "19", mcintosh: "17", oranges: "5", pears: "7" },
-            // ];
             var data = barchartData;
 
             var parse = d3.time.format("%Y").parse;
@@ -296,31 +262,31 @@ require(['knockout','jquery','d3','topojson','queue','underscore', 'bootstrap'],
 
 
             // Draw legend
-            var legend = svg.selectAll(".legend")
-              .data(colors)
-              .enter().append("g")
-              .attr("class", "legend")
-              .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+            // var legend = svg.selectAll(".legend")
+            //   .data(colors)
+            //   .enter().append("g")
+            //   .attr("class", "legend")
+            //   .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
              
-            legend.append("rect")
-              .attr("x", width - 18)
-              .attr("width", 18)
-              .attr("height", 18)
-              .style("fill", function(d, i) {return colors.slice()[i];});
+            // legend.append("rect")
+            //   .attr("x", width - 18)
+            //   .attr("width", 18)
+            //   .attr("height", 18)
+            //   .style("fill", function(d, i) {return colors.slice()[i];});
              
-            legend.append("text")
-              .attr("x", width + 5)
-              .attr("y", 9)
-              .attr("dy", ".35em")
-              .style("text-anchor", "start")
-              .text(function(d, i) { 
-                return labels[i];
-                // switch (i) {
-                //   case 0: return "Major Corrections";
-                //   case 1: return "Minor Corrections";
-                //   case 2: return "Breaking News Updates";
-                // }
-              });
+            // legend.append("text")
+            //   .attr("x", width + 5)
+            //   .attr("y", 9)
+            //   .attr("dy", ".35em")
+            //   .style("text-anchor", "start")
+            //   .text(function(d, i) { 
+            //     return labels[i];
+            //     // switch (i) {
+            //     //   case 0: return "Major Corrections";
+            //     //   case 1: return "Minor Corrections";
+            //     //   case 2: return "Breaking News Updates";
+            //     // }
+            //   });
 
 
             // Prep the tooltip bits, initial display is hidden
